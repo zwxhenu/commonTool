@@ -13,7 +13,6 @@ class Utils
 	 * @param string $str		the string to search in
 	 * @param string $needle	the string to be searched
 	 * @return bool	true or false
-	 * @author zhujt
 	 **/
 	public static function starts_with($str, $needle)
 	{
@@ -27,7 +26,6 @@ class Utils
 	 * @param string $str		the string to search in
 	 * @param string $needle	the string to be searched
 	 * @return bool	true or false
-	 * @author zhujt
 	 **/
 	public static function ends_with($str, $needle)
 	{
@@ -60,7 +58,6 @@ class Utils
 	 *
 	 * @param array	$val	Array to be noslashing
 	 * @return array The array with all of the values in it noslashed
-	 * @author zhujt
 	 **/
 	public static function noslashes_recursive($val)
 	{
@@ -94,7 +91,6 @@ class Utils
 	 * @param string $out_charset	The output charset
 	 * @return mix	The array with all of the values in it noslashed
 	 * @see http://cn2.php.net/manual/en/function.iconv.php
-	 * @author zhujt
 	 **/
 	public static function iconv_recursive($var, $in_charset = 'UTF-8', $out_charset = 'GBK')
 	{
@@ -122,7 +118,6 @@ class Utils
 	 *
 	 * @param string $str	text to be check
 	 * @return bool
-	 * @author zhujt
 	 **/
 	public static function is_gbk($str)
 	{
@@ -134,7 +129,6 @@ class Utils
 	 *
 	 * @param string $str	text to be check
 	 * @return bool Returns true if input string is utf8, or false otherwise
-	 * @author zhujt
 	 **/
 	public static function is_utf8($str)
 	{
@@ -160,7 +154,6 @@ class Utils
 	 *
 	 * @param string $str	text to be escaped
 	 * @return string	escaped string in gbk
-	 * @author zhujt
 	 **/
 	public static function escape_html_entities($str)
 	{
@@ -181,7 +174,6 @@ class Utils
 	 * @param string $str	text to be escaped
 	 * @param bool $quotes	whether should wrap in quotes
 	 * @return string
-	 * @author zhujt
 	 **/
 	public static function escape_js_quotes($str, $quotes = false)
 	{
@@ -212,7 +204,7 @@ class Utils
 	 *
 	 * @param string $url	the specified page's url
 	 * @param bool $top_redirect	Whether need to redirect the top page frame
-	 * @author zhujt
+	 
 	 **/
 	public static function redirect($url, $top_redirect = true)
 	{
@@ -224,7 +216,7 @@ class Utils
 	 * Get current page's real url
 	 * 
 	 * @return string
-	 * @author zhujt
+	 
 	 **/
 	public static function current_url()
 	{
@@ -242,7 +234,7 @@ class Utils
 	 * Whether current request is https request
 	 * 
 	 * @return bool
-	 * @author zhujt
+	 
 	 */
 	public static function is_https_request()
 	{
@@ -301,7 +293,7 @@ class Utils
 	 *
 	 * @param string $str string to be convert
 	 * @return string
-	 * @author zhujt
+	 
 	 **/
 	public static function strtoupper($str)
 	{
@@ -319,7 +311,7 @@ class Utils
 	 *
 	 * @param string $str	string to be convert
 	 * @return string
-	 * @author zhujt
+	 
 	 **/
 	public static function strtolower($str)
 	{
@@ -339,7 +331,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function urlencode_recursive($var)
 	{
@@ -365,7 +357,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function urldecode_recursive($var)
 	{
@@ -411,7 +403,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function urlencode3986_recursive($var)
 	{
@@ -437,7 +429,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function urldecode3986_recursive($var)
 	{
@@ -463,7 +455,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function base64_encode_recursive($var)
 	{
@@ -489,7 +481,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return mixed, with the same variable type
-	 * @author zhujt
+	 
 	 **/
 	public static function base64_decode_recursive($var)
 	{
@@ -514,7 +506,7 @@ class Utils
 	 * 
 	 * @param string $str
 	 * @return string
-	 * @author zhujt
+	 
 	 */
 	public static function remove_bom($str)
 	{
@@ -559,7 +551,7 @@ class Utils
 	 * @param string $content	content of the mail
 	 * @param string $cc
 	 * @return int result of sendmail command
-	 * @author zhujt
+	 
 	 **/
 	public static function sendmail($from, $to, $subject, $content, $cc = null)
 	{
@@ -584,7 +576,7 @@ class Utils
 	 *
 	 * @param string $uri URI to be trim
 	 * @return string sanitized uri
-	 * @author zhujt
+	 
 	 **/
 	public static function sanitize_uri_path($uri)
 	{
@@ -781,7 +773,7 @@ class Utils
 	 * 
 	 * @param string $url	URL to be checked
 	 * @return bool
-	 * @author zhujt
+	 
 	 **/
 	public static function is_valid_url($url)
 	{
@@ -799,7 +791,7 @@ class Utils
 	 * 
 	 * @param string $email Email to be checked
 	 * @return bool
-	 * @author zhujt
+	 
 	 **/
 	public static function is_valid_email($email)
 	{
@@ -820,7 +812,7 @@ class Utils
 	 * @param string $email Email to be checked
 	 * @param array|string $whitelist Domain list seperated by ',' or an index array
 	 * @return bool
-	 * @author zhujt
+	 
 	 */
 	public static function is_email_in_whitelist($email, $whitelist)
 	{
@@ -845,7 +837,7 @@ class Utils
 	 * 
 	 * @param string $phone	Phone number to be checked
 	 * @return bool
-	 * @author zhujt
+	 
 	 **/
 	public static function is_valid_phone($phone)
 	{
@@ -880,7 +872,7 @@ class Utils
 	 * 
 	 * @param string $iplist Ip list string to be checked
 	 * @return bool
-	 * @author zhujt
+	 
 	 **/
 	public static function is_valid_iplist($iplist)
 	{
