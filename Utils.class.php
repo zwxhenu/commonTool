@@ -855,9 +855,6 @@ class Utils
 	 * @param  $date yyyy-mm-dd
 	 *
 	 * @return bool
-	 *
-	 * @param addTime 2014-03-12
-	 * @param author  guanxiongbo
 	 */
 	public static function  check_date($date){
 		
@@ -1533,7 +1530,6 @@ class Utils
      * 过滤掉为空的值
      * @param unknown_type $val
      * @return boolean
-     * @author JiangQingChuan
      */
     public function  filter($val)
     {
@@ -1949,7 +1945,6 @@ class Utils
 	  * 一年之内显示月，否则年
 	  * @param  string $birthday	生日
       * @param  bool    $returnMonthAge(true:返回月龄,比如23，false:返回字符串的年龄，比如2岁，2个月)
-      * @modified zhangliang
 	  * @return 年龄
 	  */
 	 public static function getAgeByBirthday($birthday, $timeStamp = 0, $returnMonthAge = false) {
@@ -1976,7 +1971,6 @@ class Utils
 
 	/**
 	* post 方法上传文件
-	* @author wangyunjie
 	* @param filename 要上传的文件路径
 	* @param url      要上传的url
 	* @return max 
