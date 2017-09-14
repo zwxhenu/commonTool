@@ -13,7 +13,7 @@ class Utils
 	 * @param string $str		the string to search in
 	 * @param string $needle	the string to be searched
 	 * @return bool	true or false
-	 **/
+	 */
 	public static function starts_with($str, $needle)
 	{
 		$pos = stripos($str, $needle);
@@ -26,7 +26,7 @@ class Utils
 	 * @param string $str		the string to search in
 	 * @param string $needle	the string to be searched
 	 * @return bool	true or false
-	 **/
+	 */
 	public static function ends_with($str, $needle)
 	{
 		$pos = stripos($str, $needle);
@@ -36,6 +36,11 @@ class Utils
 		return ($pos + strlen($needle) == strlen($str));
 	}
 
+    /**
+     *
+     * @param $var
+     * @return array|null|string
+     */
 	public static function addslashes_recursive($var)
 	{
 		if (is_array($var)) {
@@ -58,7 +63,7 @@ class Utils
 	 *
 	 * @param array	$val	Array to be noslashing
 	 * @return array The array with all of the values in it noslashed
-	 **/
+	 */
 	public static function noslashes_recursive($val)
 	{
 		if (get_magic_quotes_gpc()) {
@@ -67,6 +72,11 @@ class Utils
 		return $val;
 	}
 
+    /**
+     *
+     * @param $var
+     * @return array|null|string
+     */
 	public static function stripslashes_recursive($var)
 	{
 		if (is_array($var)) {
@@ -89,9 +99,10 @@ class Utils
 	 * @param mix $var	variable to be converted
 	 * @param string $in_charset	The input charset.
 	 * @param string $out_charset	The output charset
+     *
 	 * @return mix	The array with all of the values in it noslashed
 	 * @see http://cn2.php.net/manual/en/function.iconv.php
-	 **/
+	 */
 	public static function iconv_recursive($var, $in_charset = 'UTF-8', $out_charset = 'GBK')
 	{
 		if (is_array($var)) {
@@ -118,7 +129,7 @@ class Utils
 	 *
 	 * @param string $str	text to be check
 	 * @return bool
-	 **/
+	 */
 	public static function is_gbk($str)
 	{
 		return preg_match('%^(?:[\x81-\xFE]([\x40-\x7E]|[\x80-\xFE]))*$%xs', $str);
@@ -129,7 +140,7 @@ class Utils
 	 *
 	 * @param string $str	text to be check
 	 * @return bool Returns true if input string is utf8, or false otherwise
-	 **/
+	 */
 	public static function is_utf8($str)
 	{
 		return preg_match('%^(?:[\x09\x0A\x0D\x20-\x7E]'.	// ASCII
@@ -143,6 +154,10 @@ class Utils
 			')*$%xs', $str);
 	}
 
+    /**
+     * @param $text
+     * @return string
+     */
 	public static function txt2html($text)
 	{
 		return htmlspecialchars($text, ENT_QUOTES, 'GB2312');
@@ -154,7 +169,7 @@ class Utils
 	 *
 	 * @param string $str	text to be escaped
 	 * @return string	escaped string in gbk
-	 **/
+	 */
 	public static function escape_html_entities($str)
 	{
 		return htmlspecialchars($str, ENT_QUOTES, 'GB2312');
@@ -174,7 +189,7 @@ class Utils
 	 * @param string $str	text to be escaped
 	 * @param bool $quotes	whether should wrap in quotes
 	 * @return string
-	 **/
+	 */
 	public static function escape_js_quotes($str, $quotes = false)
 	{
 		$str = strtr($str, array('\\'	=> '\\\\',
@@ -204,8 +219,7 @@ class Utils
 	 *
 	 * @param string $url	the specified page's url
 	 * @param bool $top_redirect	Whether need to redirect the top page frame
-	 
-	 **/
+	 */
 	public static function redirect($url, $top_redirect = true)
 	{
 		header('Location: ' . $url);
@@ -216,8 +230,7 @@ class Utils
 	 * Get current page's real url
 	 * 
 	 * @return string
-	 
-	 **/
+	 */
 	public static function current_url()
 	{
 		$scheme = 'http';
@@ -234,7 +247,6 @@ class Utils
 	 * Whether current request is https request
 	 * 
 	 * @return bool
-	 
 	 */
 	public static function is_https_request()
 	{
@@ -293,8 +305,7 @@ class Utils
 	 *
 	 * @param string $str string to be convert
 	 * @return string
-	 
-	 **/
+	 */
 	public static function strtoupper($str)
 	{
 		$uppers =
@@ -311,8 +322,7 @@ class Utils
 	 *
 	 * @param string $str	string to be convert
 	 * @return string
-	 
-	 **/
+	 */
 	public static function strtolower($str)
 	{
 		$uppers =
@@ -331,8 +341,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function urlencode_recursive($var)
 	{
 		if (is_array($var)) {
@@ -357,8 +366,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function urldecode_recursive($var)
 	{
 		if (is_array($var)) {
@@ -376,21 +384,24 @@ class Utils
 		}
 	}
 
-	/**
-	 * Encode a string according to the RFC3986
-	 * @param string $s
-	 * @return string
-	 */
+    /**
+     * Encode a string according to the RFC3986
+     *
+     * @param string $var
+     * @return mixed
+     */
 	public static function urlencode3986($var)
 	{
 		return str_replace('%7E', '~', rawurlencode($var));
 	}
 
-	/**
-	 * Decode a string according to RFC3986.
-	 * Also correctly decodes RFC1738 urls.
-	 * @param string $s
-	 */
+    /**
+     * Decode a string according to RFC3986.
+     * Also correctly decodes RFC1738 urls.
+     *
+     * @param  string $var
+     * @return string
+     */
 	public static function urldecode3986($var)
 	{
 		return rawurldecode($var);
@@ -403,8 +414,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function urlencode3986_recursive($var)
 	{
 		if (is_array($var)) {
@@ -429,8 +439,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return  mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function urldecode3986_recursive($var)
 	{
 		if (is_array($var)) {
@@ -455,8 +464,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function base64_encode_recursive($var)
 	{
 		if (is_array($var)) {
@@ -481,8 +489,7 @@ class Utils
 	 *
 	 * @param mixed $var
 	 * @return mixed, with the same variable type
-	 
-	 **/
+	 */
 	public static function base64_decode_recursive($var)
 	{
 		if (is_array($var)) {
@@ -506,7 +513,6 @@ class Utils
 	 * 
 	 * @param string $str
 	 * @return string
-	 
 	 */
 	public static function remove_bom($str)
 	{
@@ -521,12 +527,19 @@ class Utils
 	 * recommend in php.net/uniqid
 	 *
 	 * @return string a unique random hex key
-	 **/
+	 */
 	public static function generate_rand_key()
 	{
 		return md5(uniqid(mt_rand(), true));
 	}
 
+    /**
+     * 生成随机数
+     *
+     * @param int $len
+     * @param string $seed
+     * @return string
+     */
 	public static function generate_rand_str($len = 32, $seed = '')
 	{
 		if (empty($seed)) {
@@ -551,8 +564,7 @@ class Utils
 	 * @param string $content	content of the mail
 	 * @param string $cc
 	 * @return int result of sendmail command
-	 
-	 **/
+	 */
 	public static function sendmail($from, $to, $subject, $content, $cc = null)
 	{
 		if (empty($from) || empty($to) || empty($subject) || empty($content)) {
@@ -594,6 +606,7 @@ class Utils
 	/**
 	 * Check whether input url has http:// or https:// as its scheme,
 	 * if hasn't, it will add http:// as its prefix
+     *
 	 * @param string $url
 	 * @return string
 	 */
@@ -639,8 +652,7 @@ class Utils
 	 * @param char $lower_chr	lower bytes of the charactor
 	 * @param char $higher_chr	higher bytes of the charactor
 	 * @return bool Returns true if it's a chinese charactor, or false otherwise
-	 * @author liaohuiqin
-	 **/
+	 */
 	public static function is_cjk($lower_chr, $higher_chr)
 	{
 		if (($lower_chr >= 0xb0 && $lower_chr <= 0xf7 && $higher_chr >= 0xa1 && $higher_chr <= 0xfe) ||
@@ -657,8 +669,7 @@ class Utils
 	 * @param char $lower_chr	lower bytes of the charactor
 	 * @param char $higher_chr	higher bytes of the charactor
 	 * @return bool Returns true if it's a chinese graph charactor, or false otherwise
-	 * @author liaohq
-	 **/
+	 */
 	public static function is_gbk_graph($lower_chr, $higher_chr)
 	{
 		if (($lower_chr >= 0xa1 && $lower_chr <= 0xa9 && $higher_chr >= 0xa1 && $higher_chr <= 0xfe) ||
@@ -674,8 +685,7 @@ class Utils
 	 * 
 	 * @param string $str string to be checked
 	 * @return  bool 都是gbk可见字符则返回true，否则返回false
-	 * @author liaohq
-	 **/
+	 */
 	public static function  check_gbk_seen($str)
 	{
 		$len = strlen($str);
@@ -708,8 +718,7 @@ class Utils
 	 *
 	 * @param string $str string to be checked
 	 * @return  bool
-	 * @author liaohq
-	 **/
+	 */
 	public static function check_cjkalnum($str)
 	{
 		$len = strlen($str);
@@ -743,8 +752,7 @@ class Utils
 	 *
 	 * @param string $str string to be checked
 	 * @return  bool
-	 * @author liaohq
-	 **/
+	 */
 	public static function check_cjk($str)
 	{
 		$len = strlen($str);
@@ -773,8 +781,7 @@ class Utils
 	 * 
 	 * @param string $url	URL to be checked
 	 * @return bool
-	 
-	 **/
+	 */
 	public static function is_valid_url($url)
 	{
 		if (strlen($url) > 0) {
@@ -791,8 +798,7 @@ class Utils
 	 * 
 	 * @param string $email Email to be checked
 	 * @return bool
-	 
-	 **/
+	 */
 	public static function is_valid_email($email)
 	{
 		return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -809,10 +815,10 @@ class Utils
 
 	/**
 	 * Check whether the email is in the specified whitelist domains
+     *
 	 * @param string $email Email to be checked
 	 * @param array|string $whitelist Domain list seperated by ',' or an index array
 	 * @return bool
-	 
 	 */
 	public static function is_email_in_whitelist($email, $whitelist)
 	{
@@ -832,13 +838,12 @@ class Utils
 		return in_array($domain, $whitelist);
 	}
 
-	/**
-	 * Check whether it is a valid phone number
-	 * 
-	 * @param string $phone	Phone number to be checked
-	 * @return bool
-	 
-	 **/
+    /**
+     * Check whether it is a valid phone number
+     *
+     * @param string $phone	Phone number to be checked
+     * @return bool
+     */
 	public static function is_valid_phone($phone)
 	{
 		if (strlen($phone) > 0) {
@@ -864,13 +869,13 @@ class Utils
 		}
 		return true;
 	}
-	/**
-	 * Check whether it is a valid ip list, each ip is delemited by ','
-	 * 
-	 * @param string $iplist Ip list string to be checked
-	 * @return bool
-	 
-	 **/
+
+    /**
+     * Check whether it is a valid ip list, each ip is delemited by ','
+     *
+     * @param string $iplist Ip list string to be checked
+     * @return bool
+     */
 	public static function is_valid_iplist($iplist)
 	{
 		$iplist = trim($iplist);
@@ -932,6 +937,12 @@ class Utils
 		return $left;
 	}
 
+    /**
+     *
+     * @param $hashKey
+     * @param $subTable
+     * @return bool|int
+     */
 	public static function getHash($hashKey, $subTable) {
 		if (! is_numeric ( $hashKey ) && ! is_string ( $hashKey )) {
 			return false;
@@ -951,6 +962,11 @@ class Utils
 		return $ret;
 	}
 
+    /**
+     *
+     * @param $str
+     * @return int
+     */
 	public static function getHashFromString($str) {
 		if (empty ( $str )) {
 			return 0;
@@ -1030,7 +1046,12 @@ class Utils
 		return true;
 	}
 
-	//按字符串生成hash数值
+    /**
+     * 按字符串生成hash数值
+     *
+     * @param $str
+     * @return int
+     */
 	public static function hash_string($str)
 	{   
 		if (empty($str)) return 0;
@@ -1040,8 +1061,13 @@ class Utils
 			$h = 5*$h + ord($str[$i]);
 		}   
 		return $h; 
-	}  
+	}
 
+    /**
+     *
+     * @param $ex
+     * @return bool|string
+     */
 	public static function getErrorCode($ex) {
 		$errcode = $ex->getMessage();
 		if (0 < ($pos = strpos($errcode,' '))) {
@@ -1119,18 +1145,17 @@ class Utils
          }
 
      }
-	 
-	/**
-	 * 字符截取 支持UTF8/GBK
-	 * @param  $string 要截取的字符串
-	 * @param  $length 截取长度
-	 * @param  $dot	   后缀符
-	 *
-	 * @return $string
-	 *
-	 * @param Copy From phpcms/func by ChengBo
-	 * @param addTime 2014-03-10
-	 */
+
+    /**
+     * * 字符截取 支持UTF8/GBK
+     *
+     * @param  $string 要截取的字符串
+     * @param  $length 截取长度
+     * @param  string $dot	   后缀符
+     * @param Copy From phpcms/func
+     *
+     * @return mixed|string
+     */
     public static function str_cut($string, $length, $dot = '...') {
 		$strlen = strlen($string);
 		if ($strlen <= $length)
@@ -1182,8 +1207,14 @@ class Utils
 	}
 
 
-	//生成随机数
+    /**
+     * 生成随机数
+     *
+     * @param string $num
+     * @return int|string
+     */
 	public static function randomNumber($num='6'){
+        $newNum = 0;
 		for ($i=0; $i < $num; $i++) { 
 		   $str = rand(0,9);
 		   $newNum .= $str;
@@ -1192,12 +1223,9 @@ class Utils
 	}
 	/**
 	 * 验证用户名合法性
+     *
 	 * @param  $username 要验证的用户名
-	 *
 	 * @return bool
-	 *
-	 * @param addTime 2014-03-12
-	 * @param author  gaunxiongbo
 	 */
 	public static function  check_username($username){
 		$username = trim($username);
@@ -1213,12 +1241,9 @@ class Utils
 	}	
 	/**
 	 * 验证密码合法性
+     *
 	 * @param  $password 密码
-	 *
 	 * @return bool
-	 *
-	 * @param addTime 2014-03-12
-	 * @param author  gaunxiongbo
 	 */
 	public static function  check_password($password){
 		$password = trim($password);
@@ -1246,17 +1271,19 @@ class Utils
         	return false;
         } 
         return true;  
-	}	
-	 /**
-	 * 分页函数
-	 *
-	 * @param $num 信息总数
-	 * @param $curr_page 当前分页
-	 * @param $perpage 每页显示数
-	 * @param $urlrule URL规则
-	 * @param $array 需要传递的数组，用于增加额外的方法
-	 * @return 分页
-	 */
+	}
+
+    /**
+     *  分页函数
+     *
+     * @param $num 信息总数
+     * @param $curr_page 当前分页
+     * @param int $perpage 每页显示数
+     * @param string $urlrule  URL规则
+     * @param int $setpages
+     * @param int $type
+     * @return string
+     */
 	public static function pages($num, $curr_page, $perpage = 20, $urlrule = '', $setpages = 10,$type = 1) {
 		
        if(!strstr($urlrule,"\$page")) {
@@ -1378,9 +1405,10 @@ class Utils
 	 *
 	 * @param $num 信息总数
 	 * @param $curr_page 当前分页
-	 * @param $perpage 每页显示数
-	 * @param $urlrule URL规则
-     * @param $showAll 是否显示所有页数(个人中心没有页数显示限制)
+	 * @param int $perpage 每页显示数
+	 * @param string $urlrule URL规则
+     * @param bool $showAll 是否显示所有页数(个人中心没有页数显示限制)
+      *
 	 * @return 分页
 	 */
 	public static function wapPages($num, $curr_page, $perpage = 20, $urlrule = '', $showAll=false) {
@@ -1447,7 +1475,7 @@ class Utils
 	 *
 	 * @param $urlrule 分页规则
 	 * @param $page 当前页
-	 * @param $array 需要传递的数组，用于增加额外的方法
+     *
 	 * @return 完整的URL路径
 	 */
 	private static function pageurl($urlrule, $page) {
@@ -1467,7 +1495,7 @@ class Utils
 	 * URL路径解析，pages 函数的辅助函数
 	 *
 	 * @param $par 传入需要解析的变量 默认为，page={$page}
-	 * @param $url URL地址
+	 * @param string  $url URL地址
 	 * @return URL
 	 */
 	private static function url_par($par, $url = '') {
@@ -1494,17 +1522,24 @@ class Utils
 	    return $url;
 	}
 
-	 /**
-	 * 获取当前页面完整URL地址
-	 */
-	private static function get_url() {
+    /**
+     * 获取当前页面完整URL地址
+     *
+     * @return string
+     */
+	public static function get_url() {
 	    $sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
 	    $php_self = $_SERVER['PHP_SELF'] ? ($_SERVER['PHP_SELF']) : ($_SERVER['SCRIPT_NAME']);
 	    $path_info = isset($_SERVER['PATH_INFO']) ? ($_SERVER['PATH_INFO']) : '';
-	    $relate_url = isset($_SERVER['REQUEST_URI']) ? ($_SERVER['REQUEST_URI']) : $php_self . (isset($_SERVER['QUERY_STRING']) ? '?' . ($_SERVER['QUERY_STRING']) : $path_info);
+	    $relate_url = isset($_SERVER['REQUEST_URI']) ? ($_SERVER['REQUEST_URI']) : $php_self . (isset($_SERVER['QUERY_STRING']) ? '?' . ($_SERVER['QUERY_STRING']) :$path_info);
 	    return $sys_protocal . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . $relate_url;
 	}
-	//获取用户ip地址
+
+    /**
+     * 获取用户ip地址
+     *
+     * @return string
+     */
 	public static function getClientIP()
 	{
 		if(isset($_SERVER['HTTP_CDN_SRC_IP'])) {
@@ -1528,6 +1563,7 @@ class Utils
     }
     /**
      * 过滤掉为空的值
+     *
      * @param unknown_type $val
      * @return boolean
      */
@@ -1545,6 +1581,7 @@ class Utils
      * 检查是否是合法的手机号, 合法的手机号是指1开头的11位数字字符串
      * 
      * @param  string $mobile	要验证的手机号
+     * @param  $strict
      * @return boolean 如果要验证的手机号是合法的手机号, 返回TRUE; 否则返回FALSE
      */
  	public static function check_mobile($mobile, $strict = FALSE) {
@@ -1562,8 +1599,9 @@ class Utils
      * 3. 七到八位的座机号(数字字符串), 必须
      * 4. 二到五位的分机号及前缀连接符(中横线), 可选(如果有分机号, 座机号和分机号之间的连接符则是必须)
      * 
-     * @param  string  $mobile				要验证的座机号
+     * @param  string  $phone				要验证的座机号
      * @param  boolean $require_city_code	是否必须包含区号, 默认FALSE表示不必须
+     *
      * @return boolean 如果要验证的座机号是合法的座机号, 返回TRUE; 否则返回FALSE
      */
 	public static function check_phone($phone, $require_city_code = FALSE) {
@@ -1576,14 +1614,13 @@ class Utils
 		}
 	}
 
-	/**
-	 * @author yuli
-	 * @since 2014/4/18
-	 * @param int    $time 时间戳
-	 * @param string $str  返回时间的格式 默认：Y-m-d H:i:s
-	 * @brief wap医义诊往期、预告、进行中 ，根据时间戳获取上午还是下午
-	 *  
-	 **/
+    /**
+     * wap医义诊往期、预告、进行中 ，根据时间戳获取上午还是下午
+     *
+     * @param int    $time 时间戳
+     * @param string $str  返回时间的格式 默认：Y-m-d H:i:s
+     * @return bool|mixed
+     */
 	public static function getUpDowmTime($time,$str = 'Y-m-d H:i:s')
 	{
 		if(!empty($time)){
@@ -1592,21 +1629,22 @@ class Utils
 			return false;
 		}
 	}
-	
-	/**
-	 * @author yuli
-	 * @since 2014/4/18
-	 * @param int    $time 时间戳,可以是整形的时间戳也可以是一维数组
-	 * @example int  1397088000 
-	 * @example Array
-	 *			(
-	 *			    [0] => 1397814216
-	 *			    [1] => 1397088000
-	 *			)
-	 * @param string $str  默认 星期
-	 * @brief 根据时间戳获取星期几
-	 *  
-	 **/
+
+    /**
+     * 根据时间戳获取星期几
+     *
+     * @example int  1397088000
+     * @example Array
+     *			(
+     *			    [0] => 1397814216
+     *			    [1] => 1397088000
+     *			)
+     * @param string $str  默认 星期
+     *
+     * @param $time 时间戳,可以是整形的时间戳也可以是一维数组
+     * @param string $str
+     * @return array|bool|string
+     */
 	public static function getWeekDays($time,$str='星期')
 	{
 		if(!empty($time)){
@@ -1625,40 +1663,13 @@ class Utils
 			return false;
 		}
 	}
-	
-	/**
-	 * 用字符分割字符串
-	 * @param string $str 要分割的字符串
-	 * @param int $length 分割长度
-	 * @param string $character 分割字符
-	 * @param author yanghuichao
-	 * @example split_str(12345, 3, ',') return 12,345
-	 */ 
-	public static function split_str($str, $length = 3, $character = ','){
-		$ret = '';
-		$char = '';
-		$str = (string)$str;
-		for($i=strlen($str)-1, $n=0; $i >= 0; $i = $i-3,$n++){
-			$len = $length;
-			$pos = $i - 2;
-			if($pos < 0){
-				$len = 3 + $pos;
-				$pos = 0;
-			}
-			$s = substr($str, $pos, $len);
-			$ret = $s . $char . $ret;
-			$char = $character;
-		}
-		return $ret;
-	}
-	
-	/**
-	 *	创建 文件夹
-	 *  @param $dir 要创建的文件夹路径
-	 *
-	 * @param author  ChengBo
-	 * @param addTime 2014-05-07
-	 */
+
+    /**
+     * 创建 文件夹
+     *
+     * @param $dir
+     * @return bool
+     */
 	public static function mkdirs($dir){
 		if(is_dir($dir)){
             return true;
@@ -1672,9 +1683,11 @@ class Utils
         return false;
 	}
 
-	/**
+    /**
      * 将问题中的月龄转成相应的年龄显示
-     * @param int $monthAge     问题中的月龄
+     *
+     * @param $monthAge
+     * @return string
      */
     public static function processMonthAge($monthAge) {
         if ($monthAge == 0) {
@@ -1687,7 +1700,35 @@ class Utils
     }
 
     /**
+     * 用字符分割字符串
+     *
+     * @param string $str 要分割的字符串
+     * @param int $length 分割长度
+     * @param string $character 分割字符
+     * @example split_str(12345, 3, ',') return 12,345
+     * @return string
+     */
+    public static function split_str($str, $length = 3, $character = ','){
+        $ret = '';
+        $char = '';
+        $str = (string)$str;
+        for($i=strlen($str)-1, $n=0; $i >= 0; $i = $i-3,$n++){
+            $len = $length;
+            $pos = $i - 2;
+            if($pos < 0){
+                $len = 3 + $pos;
+                $pos = 0;
+            }
+            $s = substr($str, $pos, $len);
+            $ret = $s . $char . $ret;
+            $char = $character;
+        }
+        return $ret;
+    }
+
+    /**
      * 将时间戳转换成多长时间前，和日期
+     *
      * @param  int     $time     时间戳
      * @return string  日期，多少秒前，多少分钟前，多少小时前，多少天前
      */
@@ -1697,7 +1738,7 @@ class Utils
 
     	if ($diffTime < 60) {
     		return $diffTime.'秒前';
-    	} 
+    	}
     	elseif ($diffTime < 3600 && $diffTime >=60) {
     		return floor($diffTime/60).'分钟前';
     	}
@@ -1711,9 +1752,10 @@ class Utils
     		return date($format,$time);
     	}
     }
-    
+
     /**
      * 将时间戳转换成聊天列表显示的时间
+     *
      * @param  int     $time     时间戳
      * @return string 
      */
@@ -1763,26 +1805,28 @@ class Utils
     	}
     	return sha1(md5(join('#', $args)) . '@' . $secret);
     }
+
     /**
-     * 用户名匹配
-     * @return [int] [int]
-     * @author [chuhailei]
-     * @date_add(2014/05/20)
+     *
+     * @return float
      */
     public static function make_seed()
     {
         list($usec, $sec) = explode(' ', microtime());
         return (float) $sec + ((float) $usec * 100000);
-    }    
+    }
+
     /**
-     * 字符替换substr_replace
-     * @return [string] [被替换的字符]
-     * @author [guanxiongbo]
-     * @date_add(2014/05/21)
+     * 字符替换
+     * @example
+     *  Utils::str_replace($mobile,3,6,'*');
+     *  rerurn 186******92
      *
-      * @example
-      *  Utils::str_replace($mobile,3,6,'*');
-      *  rerurn 186******92
+     * @param $str
+     * @param $start_num
+     * @param $end_num
+     * @param string $replace
+     * @return mixed
      */
     public static function str_replace($str,$start_num,$end_num,$replace = '*')
     {
@@ -1793,12 +1837,22 @@ class Utils
     	return  $replace_str = substr_replace($str, $s,$start_num, $end_num);
     }
 
-	//ip字符串转数字
-	public static function getLongIp($strIp) {
+    /**
+     * ip字符串转数字
+     *
+     * @param $strIp
+     * @return number
+     */
+	public static function get_long_ip($strIp) {
 		return bindec(decbin(ip2long($strIp)));
 	}
 
-	//是否含utf-8占位符
+    /**
+     * 是否含utf-8占位符
+     *
+     * @param $str
+     * @return bool
+     */
 	public static function is_utf8_replace_char($str) {
 		if(preg_match("/\x{fffd}/u",$str)) {
 			return true;
@@ -1813,7 +1867,7 @@ class Utils
 	 * @param  array  $params	其他额外的请求参数
 	 * @return string 签名后的URL
 	 */
-	public static function generatSignedURL($url, Array $params = NULL) {
+	public static function generat_signed_uRL($url, Array $params = NULL) {
 		$req_params = array();
 		
 		// 解析请求URL, 将请求参数分解到请求参数数组中
@@ -1901,6 +1955,7 @@ class Utils
 	 /**
 	  * 根据生日获取年龄
 	  * 30天以内显示天，一年之内显示月，否则年
+      *
 	  * @param  string $birthday	生日
 	  * @return 年龄
 	  */
@@ -1943,6 +1998,7 @@ class Utils
 	 /**
 	  * 根据生日获取年龄
 	  * 一年之内显示月，否则年
+      *
 	  * @param  string $birthday	生日
       * @param  bool    $returnMonthAge(true:返回月龄,比如23，false:返回字符串的年龄，比如2岁，2个月)
 	  * @return 年龄
@@ -1971,8 +2027,9 @@ class Utils
 
 	/**
 	* post 方法上传文件
+     *
 	* @param filename 要上传的文件路径
-	* @param url      要上传的url
+	* @param $url      要上传的url
 	* @return max 
     */
 	public static function postUploadFiles($fileName,$url){
@@ -1999,11 +2056,12 @@ class Utils
 		return $info;
 	}
     /**
-     *计算某个经纬度的周围某段距离的正方形的四个点
-     *@param lng float 经度
-     *@param lat float 纬度
-     *@param distance float 该点所在圆的半径，该圆与此正方形内切，默认值为0.5千米
-     *@return array 正方形的四个点的经纬度坐标
+     * 计算某个经纬度的周围某段距离的正方形的四个点
+     *
+     * @param float lng 经度
+     * @param float lat 纬度
+     * @param int distance 该点所在圆的半径，该圆与此正方形内切，默认值为0.5千米
+     * @return array 正方形的四个点的经纬度坐标
      */
     public static function returnSquarePoint($lng, $lat,$distance = 5){
         $EARTH_RADIUS = 6371;//地球半径，平均半径为6371km
@@ -2022,6 +2080,7 @@ class Utils
     }
     /**
      * 获取圆
+     *
      * @param $d
      * @return float
      */
@@ -2031,8 +2090,9 @@ class Utils
 
     /**
      * 获取两个坐标点之间的距离，单位km，小数点后2位
-     * @param $lat1经度
-     * @param $lng1纬度
+     *
+     * @param $lat1 经度
+     * @param $lng1 纬度
      * @param $lat2
      * @param $lng2
      * @return float|int
@@ -2053,6 +2113,7 @@ class Utils
      * @param $arr
      * @param $keys
      * @param string $type
+     *
      * @return array
      */
     public static function array_sort($arr,$keys,$type='asc'){
@@ -2079,6 +2140,7 @@ class Utils
     /**
      * 数组中的为null值的元素赋值为空字符串
      * 本方法仅当数据库有字段默认值为NULL的时候调用
+     *
      * @param $arr
      * @return array
      */
@@ -2101,6 +2163,7 @@ class Utils
 
     /**
      * 根据权重获取开通的服务
+     *
      * @param $weight
      * @return array|bool
      */
@@ -2121,8 +2184,9 @@ class Utils
 
     /**
      * 根据服务值，获取所有可能开通这种服务的weight值
+     *
      * @param $service
-     * @return array
+     * @return array|bool
      */
     public static function getWeightByService($service) {
         $arr =array(4,2,1);        //1: 1 3 5 7
@@ -2140,18 +2204,32 @@ class Utils
         }
         return $new_arr;
     }
+
+    /**
+     * 打印输出
+     *
+     * @param $value
+     * @param string $type
+     * @param bool $header
+     */
    public static function  dump($value,$type = '',$header=true){
-            if($header){
+       if($header){
               header("Content-type: text/html; charset=utf-8");
-            }
-	    if($type == 1){
+       }
+       if($type == 1){
 	      echo '<pre>';
 	      var_dump($value);
-	    } else {
+       } else {
 	      echo '<pre>';
 	      print_r($value);
-	    }
-  	}  
+       }
+  	}
+
+    /**
+     * 图片转emotion
+     * @param $html
+     * @return string
+     */
   	public static function imgToEmotion($html) {
 		$html = strip_tags($html, '<img>, <a>');
 		if (strpos($html, 'dialogs/emotion') !== false) {
@@ -2161,6 +2239,16 @@ class Utils
 		$html = str_replace("&nbsp;", "\t", $html);
 		return trim($html);
 	}
+
+    /**
+     * 发送微信文本消息
+     *
+     * @param $hid
+     * @param $openid
+     * @param $msg
+     *
+     * @return mixed
+     */
   	public static function sendWeixinText($hid,$openid,$msg){
     	$hospitalApp = WechathospitalConfig::$hospitals[$hid];
     	CLog::debug(sprintf("sendWeixinText hid[%d] openid[%s] msg[%s]",$hid,$openid,$msg));
@@ -2175,7 +2263,16 @@ class Utils
 					));
 			return $wexin->sendText($msg,$openid);
     }
-    public static function sendWeixinNews($hid,$openid,$msg){
+
+    /**
+     * 发送微信消息
+     *
+     * @param $hid
+     * @param $openid
+     * @param $msg
+     * @return mixed
+     */
+    public static function sendWeixinNews($hid, $openid, $msg){
     	$hospitalApp = WechathospitalConfig::$hospitals[$hid];
     	CLog::debug(sprintf("sendWeixinText hid[%d] openid[%s] msg[%s]",$hid,$openid,var_export($msg,1)));
 			if (empty($hospitalApp)){
@@ -2189,11 +2286,11 @@ class Utils
 					));
 			return $wexin->sendNews($msg,$openid);
     }
-    
+
     /**
-     * 判断访问的来源是否是手机端
-     * @author yaojiaming
-     * @return boolean
+     * 判断手机来源
+     *
+     * @return bool
      */
      public static function isMobile(){
     	// 如果有HTTP_X_WAP_PROFILE则一定是移动设备
@@ -2263,7 +2360,6 @@ class Utils
     
     		}
     	}
-    
     	// 协议法，因为有可能不准确，放到最后判断
     	if (isset ($_SERVER['HTTP_ACCEPT']))
     	{
@@ -2272,7 +2368,6 @@ class Utils
     		if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html'))))
     		{
     			return true;
-    
     		}
     	}
     	return false;
@@ -2355,12 +2450,14 @@ class Utils
     
     /**
      * 过滤html,空格,换行
+     *
      * @param string $str
-     * @author zangwenxue
+     *
      * @return string
      */
     public static function filterChar($str) {
-    	$search = array(
+        $str = strip_tags(trim($str));
+        $search = array(
     		"<br />","<br>","<br/>","\r\n","\r","\n","&nbsp;",
     	 	"&amp;", "ldquo;", "rdquo;", "bull;", "&rsquo;", "\t",
     		"NULL", "null", "&mdash"
@@ -2373,7 +2470,6 @@ class Utils
     	$str = preg_replace( "@<iframe(.*?)</iframe>@is", "", $str );
     	$str = preg_replace( "@<style(.*?)</style>@is", "", $str );
     	$str = preg_replace( "@<(.*?)>@is", "", $str );
-    	$str = strip_tags(trim($str));
     	return str_replace($search, $replace, $str);
     }
     /**
@@ -2433,9 +2529,10 @@ class Utils
      }
      return $status;
      }
+
     /**
      * APNS NOTIFICATION
-     * @param type $clientId 用来筛选 Push Certificate 
+     * @param type $clientId 用来筛选 Push Certificate
      * @param array $arrTokenMsg = array
      *                               'tokenA' => 'contentA',
      *                               'tokenB' => 'contentB',
@@ -2444,6 +2541,8 @@ class Utils
      *                               'key1' => (mixed)'val2'
      *                               'key2' => (mixed)'val2'
      *                           );
+     * @param $clientId
+     *
      */
     public static function apnsPush($clientId, array $arrTokenMsg, array $arrCustom = array()){
         CLog::debug('APNS: %s#%s', $clientId, var_export($arrTokenMsg,true));
@@ -2555,8 +2654,13 @@ class Utils
         if (!empty($aErrorQueue)) {
             CLog::debug('APNS_PUSH:%s',var_export($aErrorQueue,true));
         }
-    }    
+    }
 
+    /**
+     *
+     * @param $text
+     * @return mixed
+     */
 	public static function removeEmoji($text) {
 		$clean_text = ""; 
 		// Match Emoticons
@@ -2582,10 +2686,16 @@ class Utils
 		return preg_replace_callback('/[\xf0-\xf7].{3}/', function($r) { return '';}, $clean_text); 
 	}
 
-	/*
-	 * 说明：函数功能是把一个图像裁剪为任意大小的图像，图像不变形 参数说明：输入 需要处理图片的 文件名，生成新图片的保存文件名，生成新图片的宽，生成新图片的高
-	*/
-	// 获得任意大小图像，不足地方拉伸，不产生变形，不留下空白
+    /**
+     * 说明：函数功能是把一个图像裁剪为任意大小的图像，图像不变形 参数说明：输入 需要处理图片的 文件名，生成新图片的保存文件名，生成新图片的宽，生成新图片的高
+     * 获得任意大小图像，不足地方拉伸，不产生变形，不留下空白
+     *
+     * @param $src_file
+     * @param $dst_file
+     * @param $new_width
+     * @param $new_height
+     * @return bool
+     */
 	public static function resizeImage($src_file, &$dst_file, $new_width, $new_height) {
 		if ($new_width < 1 || $new_height < 1) {
 			CLog::debug('params width or height error !');
@@ -2688,7 +2798,189 @@ class Utils
 					break;
 			}
 		}
-	} 
+	}
+
+    /**
+     * 上传
+     *
+     * @param $file_element_name $_FILE资源
+     * @param $file_name 文件名加路径
+     * @param $allow_type
+     * @param $allow_size
+     * @param int $server_index
+     * @return string
+     */
+	public function file_upload($file_element_name, $file_name, $allow_type, $allow_size, $server_index = 0){
+		$temp_path = '/tmp/'; // 可定义到配置文件中
+		//$server_index = '服务器的FTP配置'; // 上传是通过ftp上传方式
+		$file_ext_name = fileext($file_element_name);// 获取扩展名
+		if($file_element_name['error'] != 0){
+			switch ($file_element_name['error']){
+                case '1':
+                    $error = '上传文件大小超过服务器的最大限制！';
+                    break;
+                case '2':
+                    $error = '上传的文件超过最大限制!';
+                    break;
+                case '3':
+                    $error = '上传的文件只有一部分上传!';
+                    break;
+                case '4':
+                    $error = '无任何文件上传!';
+                    break;
+                case '6':
+                    $error = '临时文件夹丢失!';
+                    break;
+                case '7':
+                    $error = '文件写入磁盘失败!';
+                    break;
+                case '8':
+                    $error = '不允许上传类型!';
+                    break;
+                default:
+                    $error = '未知错误!';
+            }
+		}
+		if(empty($file_element_name['tmp_name'])){
+            $error = '无任何文件上传';
+        } if(!in_array(strtolower($file_ext_name), $allow_type) && $allow_type != 'all') {
+            $error = '上传文件属非法类型';
+        }
+        if(filesize($file_element_name['tmp_name']) > $allow_size){
+            $error = '上传文件大小超过限制';
+        }
+        $tmp_file = $temp_path.'tmp_'.uniqid().$file_ext_name;
+        if(@move_uploaded_file($file_element_name['tmp_name'],$tmp_file)){
+            $ftp_source_files[] = $tmp_file;
+            $ftp_desc_files[] = $file_name;
+        }else{
+            $error = '文件上传失败!';
+        }
+        $upload_res = $this->ftp_hands_out_file($ftp_desc_files, $ftp_source_files, $server_index ,FTP_BINARY);
+        if($upload_res){
+            return $file_name;
+        }
+        return $error;
+	}
+
+    /**
+     * 分发
+     *
+     * @param array $destination_file  文件资源临时
+     * @param array $source_file  永久文件资源
+     * @param $server_index
+     * @param $ftp_mode
+     *
+     * @return bool
+     */
+    function ftp_hands_out_file($destination_file, $source_file, $server_index, $ftp_mode)
+    {
+        if(empty($destination_file) || empty($source_file)){
+            return false;
+        }
+        // ftp服务配置
+        $server_list = array(
+            array(  //img_ftp 4
+                'WWW'=>'http://img.smallcoder.com',
+                'STATIC' => '/data/',
+                'TEMPLATE' => '/export/home/cms/www/template.img.smallcoder.com',
+                'FTP_CFG'=>array(
+                    array(
+                        'FTP_SVR'=>'10.15.200.11',
+                        'FTP_USER' => "ftp_user",
+                        'FTP_PWD' => "ftp_password",
+                        'FTP_DIR' => ""
+                    ),
+                ),
+
+            ),
+        );
+        if(!isset($server_list[$server_index]['FTP_CFG']) || !is_array($server_list[$server_index]['FTP_CFG']) || empty($server_list[$server_index]['FTP_CFG'])){
+            return false;
+        }
+        foreach ($server_list[$server_index]['FTP_CFG'] as $value){
+            //$ftp_server[] = array('host'=>$value['FTP_SVR'], 'user' => $value['FTP_USER'], 'password' => $value['FTP_PWD'], 'dir' => $value['FTP_DIR']);
+            // 链接服务
+            $conn_id = ftp_connect($value['FTP_SVR']);
+            if(!$conn_id){
+                return false;
+            }
+            $connect_res = ftp_login($conn_id, $value['FTP_USER'], $value['FTP_PWD']);
+            if(!$connect_res){
+                return false;
+            }
+            for ($x = 0 ; $x < count($destination_file) ; $x++){
+                $destination_file = $destination_file[$x];
+                $source_file = $source_file[$x];
+                //创建目录
+                $file_Paths = explode("/" , $destination_file);
+                array_pop($file_Paths);
+                if (is_array($file_Paths) && count($file_Paths)>0){
+                    $path = "";
+                    foreach($file_Paths as $key => $val){
+                        $path .= "/" . $val;
+                        @ftp_mkdir($conn_id , $path);
+                    }
+                }
+                //上传文件
+                $upload = ftp_put($conn_id, $destination_file, $source_file,$ftp_mode);
+                if (!$upload) {
+                    return false;
+                }
+            }
+            ftp_close($conn_id);
+            return true;
+        }
+    }
+    /**
+     * 切出文章样图
+     *
+     * @param $s_img
+     * @param $d_img
+     * @param $size
+     */
+    function copy_story_sample_pic($s_img,$d_img,$size){
+        // /usr/local/bin/composite ImageMagick composite命令 做水印用的
+        // /export/home/cms/www/mark/msyh.ttf //ImageMagick composite命令 做水印用的字体文件
+        @exec("/usr/local/bin/convert $s_img -resize $size  -quality 83 +profile '*' -strip $d_img");
+    }
+
+    /**
+     * 图片上传前压缩
+     *
+     * @param $s_img
+     * @param $d_img
+     * @param int $num //指定质量 , 丢弃传参
+     */
+    function copy_pic_zip($s_img, $d_img, $num = 85) {
+        @exec("/usr/local/bin/convert -quality $num +profile '*' -strip $s_img $d_img");
+        //@system("/usr/local/bin/convert -quality $num $s_img $d_img");
+    }
+
+    /**
+     * 按照固定坐标切出指定尺寸的图片
+     *
+     * @param $width 需要切出图片的宽
+     * @param $height 需要切出图片的高
+     * @param $x 从x坐标轴开始的位置
+     * @param $y 从y坐标轴开始的位置
+     * @param $s_img 原图的地址
+     * @param $d_img 保存的图片地址
+     */
+    function get_img_fixed_width_height($width,$height,$x,$y,$s_img,$d_img){
+        @exec("/usr/local/bin/convert -crop {$width}x{$height}+{$x}+{$y} -quality 85  +profile '*' {$s_img} {$d_img}");
+        //@system("/usr/local/bin/convert -crop {$width}x{$height}+{$x}+{$y} {$s_img} {$d_img}");
+    }
+
+    /**
+     * 获取图片信息
+     *
+     * @param $path 图片路径
+     * @return string
+     */
+    function get_ima_width_height($path){
+        return exec("/usr/local/bin/identify {$path}");
+    }
     /**
      * 检查输入是不是金额格式 标准形如：123.12|123
      * 
