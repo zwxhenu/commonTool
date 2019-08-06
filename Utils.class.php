@@ -3173,5 +3173,71 @@ class Utils
 	
 		return false;
 	}
+	/**
+     * aes对称加密
+     *
+     * @param string $cipher MCRYPT_RIJNDAEL_128|MCRYPT_RIJNDAEL_192|MCRYPT_RIJNDAEL_256
+     * @param string $mode 加密模式 MCRYPT_MODE_CBC
+     * @param $secret_key 秘钥
+     * @param $encrypt_data 要加密字符串
+     * @param $iv 加密向量 { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF } 加密向量统一为16位
+     * @param 转化成PHP \x12\x34\x56\x78\x90\xAB\xCD\xEF\x12\x34\x56\x78\x90\xAB\xCD\xEF
+     *
+     * @return string
+     */
+	public static function encrypt($cipher, $mode, $secret_key, $encrypt_data, $iv, $pdding = 'PKCS7'){
+		$data = trim($data);
+		if($pdding) {
+			$block_size = mcrypt_get_block_size($cipher, $mode);
+			$data = $this->addPKCS7Padding($data, $block_size);
+		}
+		$encrypt = mcrypt_encrypt(cipher, $secret_key, $encrypt_data, $mode, $iv);
+		return base64_encode( $encrypt );
+	}
+	/**
+     * aes对称加密
+     *
+     * @param string $cipher MCRYPT_RIJNDAEL_128|MCRYPT_RIJNDAEL_192|MCRYPT_RIJNDAEL_256
+     * @param string $mode 加密模式 MCRYPT_MODE_CBC
+     * @param $secret_key 秘钥
+     * @param $encrypt_data 要加密字符串
+     * @param $iv 加密向量 { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF }
+     * @param 转化成PHP \x12\x34\x56\x78\x90\xAB\xCD\xEF\x12\x34\x56\x78\x90\xAB\xCD\xEF
+     *
+     * @return string
+     */
+	public static function decrypt($cipher, $mode, $secret_key, $encrypt_data, $iv, $pdding = 'PKCS7'){
+		$aes_data = base64_decode($encrypt_data);	
+		$decrypt =  mcrypt_decrypt($cipher, $secret_key, $aes_data, $mode, $iv);
+		return $this->stripPKCS7Padding( trim($decrypt) );
+	}
+	/**
+     * 添加填充
+     *
+     * @param string $data 加密字符串
+     * @param string $block_size 加密块大小
+	 *
+     * @return string
+     */
+	public static function addPKCS7Padding($data, $block_size){
+		$data = trim($data);
+		$pad = block_size - (strlen($data) % $block_size);
+		if( $pad <= block_size ) {
+			$padStr = chr($pad) ;
+			$data .= str_repeat($padStr, $pad);
+		}
+		return $data;
+	}
+	/**
+     * 过滤填充
+     *
+     * @param string $data 解密字符串
+	 *
+     * @return string
+     */
+	public static function stripPKCS7Padding($data){
+		$num = ord(substr($data,-1));
+		return substr($data,0,-$num);
+	}
 }
 
